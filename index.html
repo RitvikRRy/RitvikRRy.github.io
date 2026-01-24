@@ -19,13 +19,13 @@
                     },
                     colors: {
                         antireal: {
-                            base: "#f3f4ff", // Soft lavender base
+                            base: "#f3f4ff",
                             white: "#ffffff",
-                            indigo: "#1e1b4b", // Deep indigo for contrast
-                            mint: "#4ade80", // Vibrant mint from image
-                            purple: "#a855f7", // Vibrant purple from image
-                            cyan: "#22d3ee", // Electric cyan
-                            lavender: "#dbeafe", // Background tint
+                            indigo: "#1e1b4b",
+                            mint: "#4ade80",
+                            purple: "#a855f7",
+                            cyan: "#22d3ee",
+                            lavender: "#dbeafe",
                             magenta: "#ec4899",
                         }
                     },
@@ -151,7 +151,12 @@
     <div class="dots"></div>
     <div class="checkerboard fixed inset-0 pointer-events-none z-0"></div>
     <div class="scanner-line animate-scan-v"></div>
-    <div id="root"></div>
+    <div id="root">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="text-antireal-indigo/20 font-mono animate-pulse uppercase tracking-widest text-sm">System_Initializing...</div>
+        </div>
+    </div>
+    <script type="module" src="./index.tsx"></script>
 <script type="module" src="/index.tsx"></script>
 </body>
 </html>

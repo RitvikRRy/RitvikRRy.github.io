@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 import { 
@@ -39,9 +38,30 @@ import {
   Menu,
   X
 } from 'lucide-react';
-import { Project, Experience, SkillGroup } from './types';
 
-// --- SNIPPETS FOR BACKGROUND (Reflecting GitHub Repos) ---
+// --- TYPES ---
+export interface Experience {
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  description: string[];
+}
+
+export interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  link?: string;
+  icons?: string[];
+}
+
+export interface SkillGroup {
+  category: string;
+  skills: string[];
+}
+
+// --- SNIPPETS FOR BACKGROUND ---
 const AI_SNIPPET = `# DeepfakeDetectionAI - Xception Model Logic
 from tensorflow.keras.applications import Xception
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
@@ -54,8 +74,6 @@ x = Dense(1024, activation='relu')(x)
 predictions = Dense(1, activation='sigmoid')(x)
 
 model = Model(inputs=base_model.input, outputs=predictions)
-# CIFAKE_DATASET_LOADER
-train_gen = ImageDataGenerator(rescale=1./255, horizontal_flip=True)
 # ACCURACY: 88.55%
 model.compile(optimizer='adam', loss='binary_crossentropy')`;
 
@@ -76,7 +94,6 @@ class Music(commands.Cog):
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop)
             ctx.voice_client.play(player)
-        await ctx.send(f'Now playing: {player.title}')
 # AD_FREE_LOGIC_ACTIVE`;
 
 const ALGO_SNIPPET = `# Algorithmic-learning-Project - Complexity Analysis
@@ -92,10 +109,6 @@ def bfs(graph, root):
     visited, queue = {root}, collections.deque([root])
     while queue:
         vertex = queue.popleft()
-        for neighbour in graph[vertex]:
-            if neighbour not in visited:
-                visited.add(neighbour)
-                queue.append(neighbour)
 # MEMOIZATION: FIBONACCI_O(N)`;
 
 const NETWORK_SNIPPET = `# NetworkSecurity - OpenVPN Config
@@ -110,7 +123,6 @@ remote-cert-tls server
 cipher AES-256-GCM
 auth SHA512
 verb 3
-key-direction 1
 # SECURITY_ENFORCED`;
 
 // --- DATA ---
@@ -457,7 +469,6 @@ const Header = ({ activeSection }: { activeSection: string }) => {
     if (e) e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      // Offset calculation for sticky header + additional spacing for visual comfort
       const offset = window.innerWidth < 768 ? 100 : 120; 
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
@@ -484,7 +495,6 @@ const Header = ({ activeSection }: { activeSection: string }) => {
           </span>
         </div>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8 lg:gap-12 text-[10px] font-mono font-bold uppercase tracking-[0.3em]">
           {navItems.map((item, i) => (
             <a 
@@ -501,7 +511,6 @@ const Header = ({ activeSection }: { activeSection: string }) => {
           ))}
         </div>
 
-        {/* Mobile Toggle */}
         <button 
           className="md:hidden p-2 text-antireal-indigo hover:text-antireal-purple transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -511,7 +520,6 @@ const Header = ({ activeSection }: { activeSection: string }) => {
         </button>
       </nav>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
@@ -667,7 +675,6 @@ const ProjectModule: React.FC<{ project: Project; index: number }> = ({ project,
 };
 
 const App: React.FC = () => {
-  const [isContactHovered, setIsContactHovered] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
@@ -703,16 +710,15 @@ const App: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 pb-20 md:pb-40">
         <Hero />
 
-        {/* 01. Profile Section */}
         <section id="profile" className="py-24 md:py-48 scroll-mt-24 md:scroll-mt-48">
           <SectionTitle number="01" title="Candidate Profile" subtitle="Academic_System_Audit" />
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
             <motion.div initial={{ x: -60, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ amount: 0.1 }} className="md:col-span-8 antireal-glass p-8 md:p-14 tech-border-l relative overflow-hidden">
-              <User className="text-antireal-purple mb-8 md:mb-12" size={40} md={48} />
+              <User className="text-antireal-purple mb-8 md:mb-12" size={40} />
               <h3 className="text-3xl md:text-4xl font-bold uppercase italic text-antireal-indigo mb-6 md:mb-10 tracking-tighter font-sans">Identity_Output</h3>
               <p className="text-xl md:text-2xl text-antireal-indigo/70 leading-relaxed uppercase tracking-tight mb-8 md:mb-14 max-w-2xl font-sans">
                 I AM A <span className="text-antireal-indigo">MASTER'S STUDENT</span> AT RUTGERS UNIVERSITY. 
-                I SPECIALIZE IN CLOUD ENGINEERING, DESKTOP SUPPORT, AND ARTIFICIAL INTELLIGENCE. I AM CURRENTLY SEEKING AN <span className="text-antireal-mint font-bold italic">INTERNSHIP OR PART-TIME ROLE</span> TO APPLY MY EXPERTISE IN ENTERPRISE-SCALE LOGIC.
+                I SPECIALIZE IN CLOUD ENGINEERING, DESKTOP SUPPORT, AND ARTIFICIAL INTELLIGENCE.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10">
                 <div className="p-6 md:p-10 bg-white/40 border border-white/60 hover:border-antireal-purple transition-all duration-500 group">
@@ -745,13 +751,12 @@ const App: React.FC = () => {
               <motion.div initial={{ scale: 0.9, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ amount: 0.1 }} transition={{ delay: 0.2 }} className="antireal-glass p-8 md:p-12 flex-grow border-r-4 md:border-r-[12px] border-antireal-mint group">
                 <ShieldCheck className="text-antireal-mint mb-6 md:mb-8 group-hover:animate-pulse" size={32} />
                 <h4 className="text-xs md:text-sm font-mono font-bold text-antireal-indigo uppercase tracking-widest mb-6 md:mb-8">Specialization</h4>
-                <p className="text-[9px] md:text-xs text-antireal-indigo/40 font-mono uppercase leading-relaxed tracking-widest">Cloud Infrastructure • Machine Learning • Enterprise IT • Desktop Support • Automation</p>
+                <p className="text-[9px] md:text-xs text-antireal-indigo/40 font-mono uppercase leading-relaxed tracking-widest">Cloud Infrastructure • Machine Learning • IT Support</p>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* 02. Projects Section */}
         <section id="projects" className="py-24 md:py-48 scroll-mt-24 md:scroll-mt-48">
           <SectionTitle number="02" title="Tech Modules" subtitle="Logic_Implementation_Gallery" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
@@ -759,7 +764,6 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* 03. Experience Section */}
         <section id="experience" className="py-24 md:py-48 scroll-mt-24 md:scroll-mt-48">
           <SectionTitle number="03" title="Service Logs" subtitle="Historical_Career_History" />
           <div className="space-y-8 md:space-y-10">
@@ -768,7 +772,6 @@ const App: React.FC = () => {
                 key={i} 
                 initial={{ opacity: 0, x: -40 }} 
                 whileInView={{ opacity: 1, x: 0 }} 
-                whileHover={window.innerWidth > 768 ? { backgroundColor: "rgba(255, 255, 255, 0.6)" } : {}}
                 viewport={{ amount: 0.1 }} 
                 transition={{ duration: 0.6 }}
                 className="antireal-glass p-8 md:p-20 group"
@@ -777,7 +780,7 @@ const App: React.FC = () => {
                   <div>
                     <span className="text-[9px] md:text-[11px] font-mono font-bold text-antireal-purple uppercase tracking-[0.3em] md:tracking-[0.5em] mb-3 md:mb-4 block px-3 md:px-4 py-1.5 bg-antireal-purple/5 inline-block">{exp.period}</span>
                     <h3 className="text-3xl md:text-6xl font-bold uppercase italic tracking-tighter text-antireal-indigo font-sans">{exp.role}</h3>
-                    <p className="text-[11px] md:text-sm font-mono text-antireal-indigo/30 uppercase tracking-[0.2em] md:tracking-[0.4em] mt-2 md:mt-3 font-bold">{exp.company} // SECTOR: {exp.location}</p>
+                    <p className="text-[11px] md:text-sm font-mono text-antireal-indigo/30 uppercase tracking-[0.2em] md:tracking-[0.4em] mt-2 md:mt-3 font-bold">{exp.company} // {exp.location}</p>
                   </div>
                   <Briefcase size={80} className="hidden lg:block opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700" />
                 </div>
@@ -794,33 +797,20 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* 04. Contact Section */}
         <section id="contact" className="py-32 md:py-64 text-center scroll-mt-24 md:scroll-mt-48">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} 
-            whileInView={{ opacity: 1, scale: 1 }} 
-            viewport={{ amount: 0.1 }} 
-            onMouseEnter={() => setIsContactHovered(true)}
-            onMouseLeave={() => setIsContactHovered(false)}
-            className="max-w-5xl mx-auto"
-          >
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ amount: 0.1 }} className="max-w-5xl mx-auto">
             <div className="antireal-glass p-12 sm:p-24 md:p-40 relative overflow-hidden bg-white/70 border-white/60 shadow-2xl shadow-indigo-900/5 group/contact">
-              <div className="hidden sm:block absolute top-8 left-8 w-12 h-12 border-t-2 border-l-2 border-antireal-purple opacity-40" />
-              <div className="hidden sm:block absolute top-8 right-8 w-12 h-12 border-t-2 border-r-2 border-antireal-purple opacity-40" />
-              <div className="hidden sm:block absolute bottom-8 left-8 w-12 h-12 border-b-2 border-l-2 border-antireal-purple opacity-40" />
-              <div className="hidden sm:block absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-antireal-purple opacity-40" />
-              {window.innerWidth > 768 && <CodeStream snippet={NETWORK_SNIPPET} isHovered={isContactHovered} />}
               <div className="relative z-10">
-                <motion.h2 className="text-6xl sm:text-8xl md:text-[11rem] font-bold uppercase tracking-tighter italic text-antireal-indigo mb-8 md:mb-12 leading-none mix-blend-multiply font-sans" style={{ textShadow: '4px 4px 0px rgba(168, 85, 247, 0.1)' }}>Uplink</motion.h2>
+                <h2 className="text-6xl sm:text-8xl md:text-[11rem] font-bold uppercase tracking-tighter italic text-antireal-indigo mb-8 md:mb-12 leading-none mix-blend-multiply font-sans">Uplink</h2>
                 <p className="text-antireal-indigo/50 font-sans text-xs md:text-sm tracking-wide mb-12 md:mb-20 max-w-xl mx-auto leading-relaxed border-b border-antireal-indigo/5 pb-6 md:pb-10">
-                  Currently open for academic collaborations, cloud/IT-focused internships, and part-time systems engineering roles. Transmit your request via the links below.
+                  Currently open for internships and systems engineering roles.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-10">
-                  <a href="mailto:rvr45@scarletmail.rutgers.edu" className="group/btn w-full sm:w-auto px-8 md:px-16 py-5 md:py-7 bg-antireal-indigo text-white font-mono font-bold uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] hover:bg-antireal-purple transition-all shadow-2xl shadow-purple-500/20 hover:translate-y-[-6px] flex items-center justify-center gap-3 md:gap-4">
-                    <Mail size={16} className="group-hover/btn:rotate-12 transition-transform" />EMAIL_ME
+                  <a href="mailto:rvr45@scarletmail.rutgers.edu" className="group/btn w-full sm:w-auto px-8 md:px-16 py-5 md:py-7 bg-antireal-indigo text-white font-mono font-bold uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] hover:bg-antireal-purple transition-all shadow-2xl shadow-purple-500/20 flex items-center justify-center gap-3 md:gap-4">
+                    <Mail size={16} />EMAIL_ME
                   </a>
-                  <a href="https://linkedin.com/in/ritvikvroy" target="_blank" rel="noreferrer" className="group/btn w-full sm:w-auto px-8 md:px-16 py-5 md:py-7 antireal-glass border-antireal-purple/20 text-antireal-purple font-mono font-bold uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] hover:bg-white transition-all hover:translate-y-[-6px] flex items-center justify-center gap-3 md:gap-4">
-                    <Linkedin size={16} className="group-hover/btn:scale-110 transition-transform" />LINKEDIN_CORE
+                  <a href="https://linkedin.com/in/ritvikvroy" target="_blank" rel="noreferrer" className="group/btn w-full sm:w-auto px-8 md:px-16 py-5 md:py-7 antireal-glass border-antireal-purple/20 text-antireal-purple font-mono font-bold uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] hover:bg-white transition-all flex items-center justify-center gap-3 md:gap-4">
+                    <Linkedin size={16} />LINKEDIN_CORE
                   </a>
                 </div>
               </div>
@@ -832,7 +822,7 @@ const App: React.FC = () => {
       <footer className="py-16 md:py-28 border-t border-antireal-indigo/5 text-center relative z-10">
         <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-24 mb-10 md:mb-12 text-[9px] md:text-[11px] font-mono text-antireal-indigo/25 uppercase tracking-[0.4em] md:tracking-[0.6em] font-bold px-4">
           <span className="flex items-center gap-3 md:gap-4"><div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-antireal-purple rounded-full animate-pulse" />NODE: SCARLET_SECTOR</span>
-          <span className="flex items-center gap-3 md:gap-4"><div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-antireal-mint rounded-full animate-pulse" style={{ animationDelay: '0.6s' }} />FOCUS: CLOUD_AI_IT</span>
+          <span className="flex items-center gap-3 md:gap-4"><div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-antireal-mint rounded-full animate-pulse" />FOCUS: CLOUD_AI_IT</span>
           <span className="flex items-center gap-3 md:gap-4">© {new Date().getFullYear()} RR_SYS_V4</span>
         </div>
       </footer>
