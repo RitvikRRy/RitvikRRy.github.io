@@ -526,7 +526,17 @@ const Header = ({ activeSection }: { activeSection: string }) => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-[90] bg-white/95 backdrop-blur-2xl pt-32 px-8 md:hidden"
+            className="fixed inset-0 z-[90] md:hidden pt-32 px-8"
+            style={{
+              background:
+                "radial-gradient(circle at 10% 20%, rgba(168,85,247,0.08), transparent 35%)," +
+                "radial-gradient(circle at 90% 10%, rgba(34,211,238,0.06), transparent 32%)," +
+                "linear-gradient(135deg, rgba(243,244,255,0.96), rgba(243,244,255,0.9))",
+              backdropFilter: "blur(18px)",
+              borderRadius: "12px 12px 0 0",
+              boxShadow: "0 20px 60px rgba(31,41,55,0.18)",
+              border: "1px solid rgba(168,85,247,0.06)"
+            }}
           >
             <div className="flex flex-col gap-6">
               {navItems.map((item, i) => (
@@ -582,8 +592,11 @@ const Hero = () => {
               Master's Student <span className="text-antireal-purple text-lg md:text-2xl font-mono tracking-normal block mt-2 md:mt-3 opacity-70">// Seeking Internship & Part-time</span>
             </p>
             <div className="flex flex-wrap gap-4 md:gap-5">
-              <div className="px-6 md:px-10 py-4 md:py-5 antireal-glass border-antireal-indigo/5 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-antireal-indigo/60">Rutgers University</div>
-              <div className="px-6 md:px-10 py-4 md:py-5 bg-antireal-purple text-white text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest shadow-2xl shadow-antireal-purple/30 hover:bg-antireal-purple/90 transition-all cursor-default">Immediate Availability</div>
+              <div className="px-6 md:px-10 py-4 md:py-5 antireal-glass border-antireal-indigo/5 flex items-center gap-2.5 md:gap-3">
+                <img src="/Rutgers_Scarlet_Knights_logo.svg.png" alt="Rutgers University" className="h-4 md:h-5 w-auto object-contain flex-shrink-0" />
+                <span className="text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-antireal-indigo/60 whitespace-nowrap">Rutgers University</span>
+              </div>
+              <div className="px-6 md:px-10 py-4 md:py-5 bg-antireal-purple text-white text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest shadow-2xl shadow-antireal-purple/30 hover:bg-antireal-purple/90 transition-all cursor-default flex items-center justify-center">Immediate Availability</div>
             </div>
           </motion.div>
           <motion.div initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.7 }} className="flex flex-col items-start md:items-end gap-6 md:gap-10">
