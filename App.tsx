@@ -375,17 +375,17 @@ const TechGlitchLogo = () => {
 const CodeStream = ({ snippet, isHovered }: { snippet: string, isHovered: boolean }) => {
   return (
     <motion.div 
-      initial={{ opacity: 0.04 }}
-      animate={{ opacity: isHovered ? 0.22 : 0.04 }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+      initial={{ opacity: 0.08 }}
+      animate={{ opacity: isHovered ? 0.15 : 0.08 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="absolute inset-0 overflow-hidden pointer-events-none select-none" 
-      style={{ transform: "translateZ(-40px)" }}
+      style={{ transform: window.innerWidth > 768 ? "translateZ(-40px)" : "none" }}
     >
       <motion.div 
         initial={{ y: "0%" }}
         animate={{ y: "-50%" }}
-        transition={{ duration: 35, ease: "linear", repeat: Infinity }}
-        className="font-mono text-[8px] whitespace-pre p-4 leading-relaxed text-antireal-indigo"
+        transition={{ duration: 45, ease: "linear", repeat: Infinity }}
+        className="font-mono text-[8px] md:text-[9px] font-bold whitespace-pre p-3 md:p-4 leading-relaxed text-antireal-indigo"
       >
         {snippet}{"\n"}{snippet}{"\n"}{snippet}{"\n"}{snippet}
       </motion.div>
@@ -410,7 +410,7 @@ const GeometricTracer = () => {
       </motion.div>
       <motion.div style={{ y: yParallaxSlow }} className="absolute left-[5%] top-[25%] opacity-40">
         <div className="flex flex-col gap-4">
-           <motion.div animate={{ rotate: [0, 90, 180, 270, 360] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} className="w-16 h-16 border border-antireal-mint flex items-center justify-center relative">
+           <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} className="w-16 h-16 border border-antireal-mint flex items-center justify-center relative">
              <div className="absolute w-full h-px bg-antireal-mint/30" />
              <div className="absolute h-full w-px bg-antireal-mint/30" />
              <div className="w-3 h-3 bg-antireal-mint rounded-full" />
@@ -544,10 +544,6 @@ const Header = ({ activeSection }: { activeSection: string }) => {
                 </a>
               ))}
             </div>
-            <div className="absolute bottom-12 left-8 right-8 flex justify-between items-center text-[10px] font-mono uppercase tracking-widest text-antireal-indigo/40">
-              <span>Ritvik Roy // 2024</span>
-              <Activity size={16} className="text-antireal-purple animate-pulse" />
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -641,19 +637,31 @@ const ProjectModule: React.FC<{ project: Project; index: number }> = ({ project,
 
   return (
     <motion.div 
-      initial={{ opacity: 0, scale: 0.95 }}
+      initial={{ opacity: 0, scale: 0.98 }}
       whileInView={{ opacity: 1, scale: 1 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       viewport={{ amount: 0.1 }}
-      transition={{ delay: index * 0.1, type: "spring", stiffness: 260, damping: 20 }}
-      whileHover={!isHoverDisabled && window.innerWidth > 768 ? { rotateY: 8, rotateX: -8, scale: 1.05, boxShadow: "0 40px 80px -20px rgba(168, 85, 247, 0.25)" } : {}}
+      transition={{ 
+        delay: index * 0.05, 
+        type: "spring", 
+        stiffness: 80, 
+        damping: 25,
+        mass: 1.2
+      }}
+      whileHover={!isHoverDisabled && window.innerWidth > 768 ? { 
+        rotateY: 5, 
+        rotateX: -5, 
+        scale: 1.02, 
+        boxShadow: "0 30px 60px -15px rgba(168, 85, 247, 0.15)",
+        transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+      } : {}}
       style={{ perspective: 1200, transformStyle: "preserve-3d" }}
-      className={`antireal-glass p-8 md:p-12 group relative overflow-hidden h-full flex flex-col justify-between cursor-default border-t border-l border-white/40 ${!isHoverDisabled ? 'will-change-transform' : ''}`}
+      className={`antireal-glass p-8 md:p-12 group relative overflow-hidden h-full flex flex-col justify-between cursor-default border-t border-l border-white/40 transition-shadow duration-700 ${!isHoverDisabled ? 'will-change-transform' : ''}`}
     >
-      {!isHoverDisabled && snippet && window.innerWidth > 768 && <CodeStream snippet={snippet} isHovered={isHovered} />}
+      {!isHoverDisabled && snippet && <CodeStream snippet={snippet} isHovered={isHovered} />}
       <div className="absolute bottom-4 right-4 text-3xl md:text-[45px] font-bold text-antireal-indigo/[0.02] select-none font-sans">{index + 1}</div>
-      <div style={{ transform: window.innerWidth > 768 ? "translateZ(40px)" : "none" }}>
+      <div style={{ transform: window.innerWidth > 768 ? "translateZ(30px)" : "none", transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)" }}>
         <div className="flex justify-between items-start mb-6 md:mb-10">
           <ProjectIcon title={project.title} />
           {project.link && !isHoverDisabled && (
@@ -662,10 +670,10 @@ const ProjectModule: React.FC<{ project: Project; index: number }> = ({ project,
             </a>
           )}
         </div>
-        <h3 className="text-xl md:text-2xl font-bold text-antireal-indigo uppercase tracking-tight mb-4 md:mb-5 group-hover:translate-x-2 md:group-hover:translate-x-3 transition-transform duration-500 font-sans">{project.title}</h3>
+        <h3 className="text-xl md:text-2xl font-bold text-antireal-indigo uppercase tracking-tight mb-4 md:mb-5 group-hover:translate-x-1 transition-transform duration-700 font-sans">{project.title}</h3>
         <p className="text-[13px] md:text-sm text-antireal-indigo/70 font-sans leading-relaxed mb-8 md:mb-12">{project.description}</p>
       </div>
-      <div className="flex flex-wrap gap-2 pt-6 md:pt-10 border-t border-antireal-indigo/5" style={{ transform: window.innerWidth > 768 ? "translateZ(20px)" : "none" }}>
+      <div className="flex flex-wrap gap-2 pt-6 md:pt-10 border-t border-antireal-indigo/5" style={{ transform: window.innerWidth > 768 ? "translateZ(10px)" : "none", transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)" }}>
         {project.tech.map(t => (
           <span key={t} className="text-[8px] md:text-[9px] font-mono font-bold text-antireal-indigo/40 uppercase tracking-[0.1em] md:tracking-[0.2em] px-2 md:px-3 py-1 md:py-1.5 bg-white/40 border border-antireal-indigo/5 hover:border-antireal-purple transition-colors">{t}</span>
         ))}
@@ -713,7 +721,7 @@ const App: React.FC = () => {
         <section id="profile" className="py-24 md:py-48 scroll-mt-24 md:scroll-mt-48">
           <SectionTitle number="01" title="Candidate Profile" subtitle="Academic_System_Audit" />
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
-            <motion.div initial={{ x: -60, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ amount: 0.1 }} className="md:col-span-8 antireal-glass p-8 md:p-14 tech-border-l relative overflow-hidden">
+            <motion.div initial={{ x: -40, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ amount: 0.1 }} className="md:col-span-8 antireal-glass p-8 md:p-14 tech-border-l relative overflow-hidden">
               <User className="text-antireal-purple mb-8 md:mb-12" size={40} />
               <h3 className="text-3xl md:text-4xl font-bold uppercase italic text-antireal-indigo mb-6 md:mb-10 tracking-tighter font-sans">Identity_Output</h3>
               <p className="text-xl md:text-2xl text-antireal-indigo/70 leading-relaxed uppercase tracking-tight mb-8 md:mb-14 max-w-2xl font-sans">
@@ -732,8 +740,8 @@ const App: React.FC = () => {
               </div>
             </motion.div>
             <div className="md:col-span-4 flex flex-col gap-8 md:gap-10">
-              <motion.div initial={{ scale: 0.9, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ amount: 0.1 }} className="antireal-glass p-8 md:p-12 flex-grow group overflow-hidden">
-                <Zap className="text-antireal-purple mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-500" size={32} />
+              <motion.div initial={{ scale: 0.95, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ amount: 0.1 }} className="antireal-glass p-8 md:p-12 flex-grow group overflow-hidden">
+                <Zap className="text-antireal-purple mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-700" size={32} />
                 <h4 className="text-xs md:text-sm font-mono font-bold text-antireal-indigo uppercase tracking-widest mb-6 md:mb-10">Stack Focus</h4>
                 <div className="space-y-6 md:space-y-8">
                   {SKILLS.map((group, idx) => (
@@ -747,11 +755,6 @@ const App: React.FC = () => {
                     </div>
                   ))}
                 </div>
-              </motion.div>
-              <motion.div initial={{ scale: 0.9, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ amount: 0.1 }} transition={{ delay: 0.2 }} className="antireal-glass p-8 md:p-12 flex-grow border-r-4 md:border-r-[12px] border-antireal-mint group">
-                <ShieldCheck className="text-antireal-mint mb-6 md:mb-8 group-hover:animate-pulse" size={32} />
-                <h4 className="text-xs md:text-sm font-mono font-bold text-antireal-indigo uppercase tracking-widest mb-6 md:mb-8">Specialization</h4>
-                <p className="text-[9px] md:text-xs text-antireal-indigo/40 font-mono uppercase leading-relaxed tracking-widest">Cloud Infrastructure • Machine Learning • IT Support</p>
               </motion.div>
             </div>
           </div>
@@ -770,10 +773,10 @@ const App: React.FC = () => {
             {EXPERIENCES.map((exp, i) => (
               <motion.div 
                 key={i} 
-                initial={{ opacity: 0, x: -40 }} 
-                whileInView={{ opacity: 1, x: 0 }} 
+                initial={{ opacity: 0, y: 30 }} 
+                whileInView={{ opacity: 1, y: 0 }} 
                 viewport={{ amount: 0.1 }} 
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="antireal-glass p-8 md:p-20 group"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-12 mb-10 md:mb-16">
@@ -798,7 +801,7 @@ const App: React.FC = () => {
         </section>
 
         <section id="contact" className="py-32 md:py-64 text-center scroll-mt-24 md:scroll-mt-48">
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ amount: 0.1 }} className="max-w-5xl mx-auto">
+          <motion.div initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ amount: 0.1 }} className="max-w-5xl mx-auto">
             <div className="antireal-glass p-12 sm:p-24 md:p-40 relative overflow-hidden bg-white/70 border-white/60 shadow-2xl shadow-indigo-900/5 group/contact">
               <div className="relative z-10">
                 <h2 className="text-6xl sm:text-8xl md:text-[11rem] font-bold uppercase tracking-tighter italic text-antireal-indigo mb-8 md:mb-12 leading-none mix-blend-multiply font-sans">Uplink</h2>
