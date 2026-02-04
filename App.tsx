@@ -638,7 +638,7 @@ const GlitchDownloadButton = () => {
             }}
             style={{ left: `${20 + i * 15}%` }}
           >
-            {String(Math.floor(Math.random() * 16)).toString(16).toUpperCase()}
+            {Math.floor(Math.random() * 16).toString(16).toUpperCase()}
           </motion.div>
         ))}
       </motion.div>
