@@ -167,6 +167,17 @@ const PROJECTS: Project[] = [
 
 const EXPERIENCES: Experience[] = [
   {
+    company: "Unique Jewelry Designs",
+    role: "Web Developer",
+    location: "Hybrid",
+    period: "Feb 2025 — May 2025",
+    description: [
+      "Collaborated within a 3-person agile team to develop and deploy responsive web pages using WordPress and HTML.",
+      "Aligned technical development with marketing strategies to ensure landing pages were optimized for user engagement and conversion.",
+      "Participated in daily stand-ups and code reviews to ensure project milestones were met on time."
+    ]
+  },
+  {
     company: "Kean University (OCIS)",
     role: "Desktop Support Specialist",
     location: "Union, NJ",
@@ -461,6 +472,235 @@ const InteractiveBackground = () => {
 
 // --- PRIMARY UI COMPONENTS ---
 
+const GlitchDownloadButton = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.a
+      href="#"
+      onClick={(e) => {
+        e.preventDefault();
+        const link = document.createElement('a');
+        link.href = '/resume.pdf';
+        link.download = 'Ritvik_Roy_Resume.pdf';
+        link.click();
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative group inline-flex items-center gap-2 md:gap-3 px-6 md:px-8 py-4 md:py-5 font-mono font-bold text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] cursor-pointer"
+      animate={{ scale: isHovered ? 1.05 : 1 }}
+      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+    >
+      {/* Background Base Layer */}
+      <motion.div 
+        className="absolute inset-0 bg-antireal-mint border border-antireal-mint/80 -z-10"
+        animate={!isHovered ? {
+          borderColor: [
+            'rgba(0, 245, 168, 0.8)',
+            'rgba(0, 245, 168, 0.4)',
+            'rgba(0, 245, 168, 0.6)',
+            'rgba(0, 245, 168, 0.8)'
+          ]
+        } : {}}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Main Content Layer */}
+      <motion.div 
+        className="relative flex items-center gap-2 md:gap-3 text-white z-10"
+        animate={isHovered ? {
+          textShadow: [
+            '0 0 0px rgba(0, 0, 0, 0)',
+            '2px 2px 0px rgba(0, 212, 255, 0.8)',
+            '-2px -2px 0px rgba(168, 85, 247, 0.8)',
+            '0 0 0px rgba(0, 0, 0, 0)'
+          ]
+        } : {
+          textShadow: [
+            '0 0 12px rgba(0, 245, 168, 0.5)',
+            '0 0 24px rgba(0, 245, 168, 0.8)',
+            '0 0 12px rgba(0, 245, 168, 0.5)'
+          ]
+        }}
+        transition={{ 
+          duration: isHovered ? 0.3 : 2.5, 
+          repeat: Infinity, 
+          repeatDelay: isHovered ? 0 : 0 
+        }}
+      >
+        <Download size={16} />
+        <span>Download Resume</span>
+      </motion.div>
+
+      {/* Idle State: Removed shimmer line */}
+
+      {/* Distortion Layer 1 - Top Left (Always visible, intensity changes on hover) */}
+      <motion.div 
+        className="absolute inset-0 flex items-center justify-center gap-2 md:gap-3 text-cyan-400 font-mono font-bold text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] pointer-events-none"
+        initial={{ opacity: 0, x: 0, y: 0 }}
+        animate={isHovered ? {
+          opacity: [0, 0.6, 0, 0.5, 0],
+          x: [-8, -4, -6, -2, 0],
+          y: [-8, -4, 0, -3, 0],
+          skewX: [-5, 5, -3, 0]
+        } : {
+          opacity: [0, 0.2, 0, 0.15, 0],
+          x: [-4, -2, -3, -1, 0],
+          y: [-4, -2, 0, -1.5, 0],
+          skewX: [-2, 2, -1.5, 0]
+        }}
+        transition={{ duration: isHovered ? 0.4 : 1.2, repeat: Infinity, repeatDelay: isHovered ? 0.2 : 0.8 }}
+      >
+        <Download size={16} />
+        <span>Download Resume</span>
+      </motion.div>
+
+      {/* Distortion Layer 2 - Bottom Right (Always visible, intensity changes on hover) */}
+      <motion.div 
+        className="absolute inset-0 flex items-center justify-center gap-2 md:gap-3 text-antireal-purple font-mono font-bold text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] pointer-events-none"
+        initial={{ opacity: 0, x: 0, y: 0 }}
+        animate={isHovered ? {
+          opacity: [0, 0.5, 0, 0.6, 0],
+          x: [8, 4, 6, 2, 0],
+          y: [8, 4, 0, 3, 0],
+          skewX: [5, -5, 3, 0]
+        } : {
+          opacity: [0, 0.15, 0, 0.2, 0],
+          x: [4, 2, 3, 1, 0],
+          y: [4, 2, 0, 1.5, 0],
+          skewX: [2, -2, 1.5, 0]
+        }}
+        transition={{ duration: isHovered ? 0.4 : 1.2, repeat: Infinity, repeatDelay: isHovered ? 0.15 : 0.6 }}
+      >
+        <Download size={16} />
+        <span>Download Resume</span>
+      </motion.div>
+
+      {/* Corrupted Text Fragments (Always visible, intensity changes on hover) */}
+      <>
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center text-antireal-mint font-mono text-[9px] md:text-[10px] font-bold pointer-events-none"
+          animate={isHovered ? {
+            opacity: [0.4, 0, 0.4],
+            x: [3, -3, 3],
+            y: [-2, 2, -2],
+            clip: ['inset(20% 0 20% 0)', 'inset(40% 0 40% 0)', 'inset(10% 0 60% 0)', 'inset(20% 0 20% 0)']
+          } : {
+            opacity: [0.15, 0, 0.15],
+            x: [1.5, -1.5, 1.5],
+            y: [-1, 1, -1],
+            clip: ['inset(30% 0 30% 0)', 'inset(40% 0 40% 0)', 'inset(20% 0 60% 0)', 'inset(30% 0 30% 0)']
+          }}
+          transition={{ duration: isHovered ? 0.5 : 2, repeat: Infinity, repeatDelay: isHovered ? 0.1 : 1.5 }}
+        >
+          DN_LOAD_RES
+        </motion.div>
+
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center text-cyan-400 font-mono text-[9px] md:text-[10px] font-bold pointer-events-none"
+          animate={isHovered ? {
+            opacity: [0, 0.4, 0],
+            x: [-3, 3, -3],
+            y: [2, -2, 2],
+            clip: ['inset(0 30% 0 30%)', 'inset(0 10% 0 10%)', 'inset(0 50% 0 50%)', 'inset(0 30% 0 30%)']
+          } : {
+            opacity: [0, 0.15, 0],
+            x: [-1.5, 1.5, -1.5],
+            y: [1, -1, 1],
+            clip: ['inset(0 40% 0 40%)', 'inset(0 20% 0 20%)', 'inset(0 50% 0 50%)', 'inset(0 40% 0 40%)']
+          }}
+          transition={{ duration: isHovered ? 0.5 : 2, repeat: Infinity, repeatDelay: isHovered ? 0.25 : 1.2 }}
+        >
+          _DOWNLOAD__
+        </motion.div>
+      </>
+
+      {/* Data Stream Effect (Always visible, intensity changes on hover) */}
+      <motion.div 
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+        animate={{ opacity: isHovered ? [0.3, 0.1, 0.3] : [0.1, 0.05, 0.1] }}
+        transition={{ duration: isHovered ? 0.4 : 2, repeat: Infinity }}
+      >
+        {[...Array(4)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-cyan-400/50 font-mono text-[6px] font-bold"
+            animate={{
+              y: ['-20px', '60px'],
+              opacity: isHovered ? [0, 0.6, 0] : [0, 0.2, 0],
+              x: Math.sin(i) * 20
+            }}
+            transition={{
+              duration: isHovered ? 0.6 : 2,
+              repeat: Infinity,
+              repeatDelay: i * (isHovered ? 0.1 : 0.4),
+              ease: "linear"
+            }}
+            style={{ left: `${20 + i * 15}%` }}
+          >
+            {String(Math.floor(Math.random() * 16)).toString(16).toUpperCase()}
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* Edge Tear Effect (Always visible, intensity changes on hover) */}
+      <>
+        <motion.div 
+          className="absolute left-0 top-1/2 w-1 h-4 bg-cyan-400 -translate-y-1/2 pointer-events-none"
+          animate={isHovered ? {
+            opacity: [0.5, 0, 0.5],
+            x: [0, -3, 0],
+            scaleY: [1, 0.5, 1]
+          } : {
+            opacity: [0.2, 0, 0.2],
+            x: [0, -1.5, 0],
+            scaleY: [1, 0.7, 1]
+          }}
+          transition={{ duration: isHovered ? 0.3 : 1.5, repeat: Infinity, repeatDelay: isHovered ? 0.15 : 1 }}
+        />
+        <motion.div 
+          className="absolute right-0 top-1/4 w-1 h-6 bg-antireal-purple pointer-events-none"
+          animate={isHovered ? {
+            opacity: [0, 0.5, 0],
+            x: [0, 3, 0],
+            scaleY: [0.5, 1, 0.5]
+          } : {
+            opacity: [0, 0.2, 0],
+            x: [0, 1.5, 0],
+            scaleY: [0.7, 1, 0.7]
+          }}
+          transition={{ duration: isHovered ? 0.3 : 1.5, repeat: Infinity, repeatDelay: isHovered ? 0.25 : 0.8 }}
+        />
+      </>
+
+      {/* Glow/Shadow Shift Effect */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none"
+        animate={isHovered ? {
+          boxShadow: [
+            '0 0 20px rgba(0, 245, 168, 0.3)',
+            '0 0 40px rgba(0, 212, 255, 0.5), -8px 0 30px rgba(168, 85, 247, 0.3)',
+            '0 0 20px rgba(0, 245, 168, 0.3)',
+            '8px 0 30px rgba(0, 212, 255, 0.3), 0 0 40px rgba(168, 85, 247, 0.5)',
+            '0 0 20px rgba(0, 245, 168, 0.3)'
+          ]
+        } : {
+          boxShadow: [
+            '0 0 15px rgba(0, 245, 168, 0.5)',
+            '0 0 30px rgba(0, 245, 168, 0.7)',
+            '0 0 15px rgba(0, 245, 168, 0.5)'
+          ]
+        }}
+        transition={{ 
+          duration: isHovered ? 0.5 : 3, 
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    </motion.a>
+  );
+};
+
 const Header = ({ activeSection }: { activeSection: string }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navItems = ['Profile', 'Projects', 'Experience', 'Contact'];
@@ -603,13 +843,16 @@ const Hero = () => {
             <p className="text-[11px] md:text-xs text-antireal-indigo/60 font-sans text-left md:text-right max-w-sm leading-relaxed tracking-wide border-l-2 md:border-l-0 md:border-r-2 border-antireal-mint pl-4 md:pl-0 md:pr-8">
               Applying Cloud Engineering principles, Artificial Intelligence, and Enterprise IT Management to build resilient infrastructure. Master's student focused on scalable architecture and secure systems.
             </p>
-            <div className="flex flex-wrap gap-6 md:gap-8">
-              <a href="https://github.com/RRitvikVR" target="_blank" rel="noreferrer" className="group flex items-center gap-2 md:gap-3 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-antireal-indigo/40 hover:text-antireal-purple transition-all duration-300">
-                <Github size={18} /> Uplink_Github
-              </a>
-              <a href="https://linkedin.com/in/ritvikvroy" target="_blank" rel="noreferrer" className="group flex items-center gap-2 md:gap-3 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-antireal-indigo/40 hover:text-antireal-purple transition-all duration-300">
-                <Linkedin size={18} /> Uplink_LinkedIn
-              </a>
+            <div className="flex flex-col gap-6 md:gap-10">
+              <div className="flex flex-wrap gap-6 md:gap-8">
+                <a href="https://github.com/RRitvikVR" target="_blank" rel="noreferrer" className="group flex items-center gap-2 md:gap-3 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-antireal-indigo/40 hover:text-antireal-purple transition-all duration-300">
+                  <Github size={18} /> Uplink_Github
+                </a>
+                <a href="https://linkedin.com/in/ritvikvroy" target="_blank" rel="noreferrer" className="group flex items-center gap-2 md:gap-3 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-antireal-indigo/40 hover:text-antireal-purple transition-all duration-300">
+                  <Linkedin size={18} /> Uplink_LinkedIn
+                </a>
+              </div>
+              <GlitchDownloadButton />
             </div>
           </motion.div>
         </div>
