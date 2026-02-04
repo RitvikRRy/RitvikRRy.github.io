@@ -845,7 +845,7 @@ const Hero = () => {
             </p>
             <div className="flex flex-col gap-6 md:gap-10">
               <div className="flex flex-wrap gap-6 md:gap-8">
-                <a href="https://github.com/RRitvikVR" target="_blank" rel="noreferrer" className="group flex items-center gap-2 md:gap-3 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-antireal-indigo/40 hover:text-antireal-purple transition-all duration-300">
+                <a href="https://github.com/RitvikRRy" target="_blank" rel="noreferrer" className="group flex items-center gap-2 md:gap-3 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-antireal-indigo/40 hover:text-antireal-purple transition-all duration-300">
                   <Github size={18} /> Uplink_Github
                 </a>
                 <a href="https://linkedin.com/in/ritvikvroy" target="_blank" rel="noreferrer" className="group flex items-center gap-2 md:gap-3 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-antireal-indigo/40 hover:text-antireal-purple transition-all duration-300">
